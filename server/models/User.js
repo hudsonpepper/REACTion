@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -19,12 +20,44 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  thoughts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Thought',
+  priorRuns: {
+    type: [
+      {
+        datePlayed: {
+          type: Date,
+          default: Date.now,
+          get: (timestamp) => dateFormat(timestamp),
+        },
+        runtime: {
+          type: Number,
+          default: 0,
+        },
+        targetNumber: {
+          type: Number,
+          default: 0,
+        },
+        score: {
+          type: Number,
+          default: 0,
+        },
+      }
+    ],
+    default: [],
+  },
+  statistics: {
+    highScore: {
+      type: Number,
+      default: 0
     },
-  ],
+    runNumber: {
+      type: Number,
+      default: 0
+    },
+    avgScore: {
+      type: Number,
+      default: 0
+    }
+  }
 });
 
 userSchema.pre('save', async function (next) {
