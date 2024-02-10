@@ -18,6 +18,18 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.game-viewport {
+  position: relative;
+  background-color: bisque;
+  height: 60vh;
+  width: 70vw;
+}
+
+#target {
+  background-color: salmon;
+  position: absolute;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
