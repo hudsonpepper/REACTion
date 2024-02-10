@@ -1,24 +1,17 @@
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('thoughts');
+      return User.find();
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('thoughts');
-    },
-    thoughts: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
-    },
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
+      return User.findOne({ username });
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id });
       }
       throw AuthenticationError;
     },
@@ -47,69 +40,34 @@ const resolvers = {
 
       return { token, user };
     },
-    addThought: async (parent, { thoughtText }, context) => {
+    addRun: async (parent, run, context) => {
       if (context.user) {
-        const thought = await Thought.create({
-          thoughtText,
-          thoughtAuthor: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
-        );
-
-        return thought;
-      }
-      throw AuthenticationError;
-    },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
+        let user = await User.findOne({ _id: context.user._id})
+        user.priorRuns.push(run)
+        const updatedHighscore = Math.max(run.score, user.statistics.highScore);
+        const updatedRunNumber = user.statistics.runNumber + 1;
+        const updatedAvgScore = Math.round(((user.statistics.avgScore * user.statistics.runNumber) + run.score) / (user.statistics.runNumber + 1))
+        const updatedStatistics = {
+          highScore: updatedHighscore,
+          runNumber: updatedRunNumber,
+          avgScore: updatedAvgScore,
+        }
+        updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id},
           {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
+            priorRuns: user.priorRuns,
+            statistics: {
+              highScore: updatedHighscore,
+              runNumber: updatedRunNumber,
+              avgScore: updatedAvgScore,
+            }
           },
           {
-            new: true,
-            runValidators: true,
+            new: true
           }
-        );
-      }
-      throw AuthenticationError;
-    },
-    removeThought: async (parent, { thoughtId }, context) => {
-      if (context.user) {
-        const thought = await Thought.findOneAndDelete({
-          _id: thoughtId,
-          thoughtAuthor: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { thoughts: thought._id } }
-        );
-
-        return thought;
-      }
-      throw AuthenticationError;
-    },
-    removeComment: async (parent, { thoughtId, commentId }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $pull: {
-              comments: {
-                _id: commentId,
-                commentAuthor: context.user.username,
-              },
-            },
-          },
-          { new: true }
-        );
+        )
+        const token = signToken(updatedUser);
+        return { token, user: updatedUser }
       }
       throw AuthenticationError;
     },
