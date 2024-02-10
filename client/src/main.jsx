@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom/dist'
 import './index.css'
 
 import App from './App.jsx'
-import Home from './pages/Home';
+import GamePage from './pages/GamePage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import SingleThought from './pages/SingleThought';
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <GamePage />
       }, {
         path: '/login',
         element: <Login />
