@@ -11,19 +11,19 @@ const GamePage = () => {
 
     const readyHandler = (e) => {
         e.preventDefault();
-
         e.target.setAttribute("disabled", "");
         e.target.setAttribute("hidden", "");
 
+        let clockActual = countdownClock;
         setTargetCounter(0);
-        setCountdownClock(20);
         setGameState(1);
         // call render target
         renderTarget(e);
         // start timer for game
         intervalId = setInterval(() => {
-            setCountdownClock(countdownClock - 1);
-            if (countdownClock == 0) {
+            clockActual = clockActual - 1;
+            setCountdownClock(clockActual);
+            if (clockActual <= 0) {
                 setGameState(0);
                 e.target.removeAttribute("disabled", "");
                 e.target.removeAttribute("hidden", "");
@@ -34,18 +34,17 @@ const GamePage = () => {
     }
 
     const renderTarget = (e) => {
-        // display one hidden target, remove the 'hidden' property
         if (gameState != 0) {
             setGameState(gameState * -1);
             setTargetCounter(targetCounter + 1);
         }
-        if (targetCounter == 9) {
+        if (targetCounter >= 9) {
             setGameState(0);
             e.target.parentElement.children[0].removeAttribute("disabled", "");
             e.target.parentElement.children[0].removeAttribute("hidden", "");
             clearInterval(intervalId);
+            // console.log(targetCounter, countdownClock);
         }
-        console.log(gameState);
     }
 
     return (
