@@ -1,0 +1,48 @@
+@import
+url('https://fonts.googleapis.com/css2?family=Righteous&family=Space+Grotesk:wght@300..700&display=swap');
+
+/*
+#Guide to using installing tailwind with vite
+https://tailwindcss.com/docs/guides/vite 
+    1. Create Project
+        -npm create vite@latest my-project -- --template react
+        -cd my-project
+    2. Install depedencies
+        -npm install -D tailwindcss postcss autoprefixer
+        -npx tailwindcss init -p
+    3. Add the paths to all of your template files in your tailwind.config.js file.
+    4. Add the @tailwind directives for each of Tailwind’s layers to your ./src/index.css file.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Header Name */
+.Name {
+    padding-left: 25px;
+    padding-right: 25px;
+    color: #A9BCD0;
+
+}
+
+.headerbackground {
+    background-color: #373F51;
+}
+    
+.headerComponentsLayout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: "Righteous", sans-serif;
+    font-weight: 400;
+    font-size: 35px;
+    font-style: normal;
+}
+
+.reactLogo {
+    height: 5%;
+    width: auto;
+    margin-left: 50px;
+}
+
