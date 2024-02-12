@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import Name from "../Header/header-name";
 import { Link, useLocation } from "react-router-dom";
+import Auth from "../../utils/auth";
 import {
   createTheme,
   alpha,
@@ -22,8 +23,11 @@ const theme = createTheme({
   },
 });
 
-export default function Nav({ color }) {
-  const currentPage = useLocation().pathname;
+const Nav = () => {
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
 
   return (
     <>
@@ -35,23 +39,41 @@ export default function Nav({ color }) {
             </Button>
           </Link>
           <Link to="/Portfolio">
-            <Button variant="contained" color="Grey" text="Righteous">
+            <Button variant="contained" color="Grey">
               HighScores
             </Button>
           </Link>
           <Name />
-          <Link to="/Contact">
-            <Button variant="contained" color="Grey">
-              Sign-Up
-            </Button>
-          </Link>
-          <div>
-            <Button variant="contained" color="Grey">
-              Profile/Login
-            </Button>
-          </div>
+          {Auth.loggedIn() ? (
+            <>
+              <Link to="/me">
+                <Button variant="contained" color="Grey">
+                  {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
+                  {Auth.getProfile().authenticatedPerson.username}'s profile
+                </Button>
+              </Link>
+              <Button variant="contained" color="Grey" onClick={logout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="contained" color="Grey">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button variant="contained" color="Grey">
+                  Sign-Up
+                </Button>
+              </Link>
+            </>
+          )}
         </ThemeProvider>
       </section>
     </>
   );
-}
+};
+
+export default Nav;
