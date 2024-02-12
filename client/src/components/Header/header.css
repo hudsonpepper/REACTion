@@ -22,7 +22,9 @@ https://tailwindcss.com/docs/guides/vite
     padding-left: 25px;
     padding-right: 25px;
     color: #A9BCD0;
-
+}
+.Name:hover {
+    color: white;
 }
 
 .headerbackground {
