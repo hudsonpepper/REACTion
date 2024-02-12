@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Error from "./pages/Error";
+import Leaderboard from "./pages/Leaderboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,8 +37,8 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/highscores",
-        element: <Profile />,
+        path: "/leaderboard",
+        element: <Leaderboard />,
       },
     ],
   },
