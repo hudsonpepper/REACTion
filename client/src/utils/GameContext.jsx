@@ -1,5 +1,6 @@
 import { createContext, useState, useContext } from 'react';
-
+import { useMutation } from '@apollo/client';
+import { ADD_RUN } from '../utils/mutations';
 // Create our game context using createContext()
 export const GameContext = createContext();
 
@@ -10,23 +11,49 @@ export default function GameProvider({ children }) {
     const [intervalId, setIntervalId] = useState(0);
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
-    const [countdownClock, setCountdownClock]= useState(20);
-    const [leftPos, setLeftPos]= useState(50);
-    const [topPos, setTopPos]= useState(50);
+    const [countdownClock, setCountdownClock] = useState(20);
+    const [leftPos, setLeftPos] = useState(50);
+    const [topPos, setTopPos] = useState(50);
     const [buttonPressTimes, setButtonPressTimes] = useState([]);
+    const [addRun, { error, data }] = useMutation(ADD_RUN);
+
 
     const updatePosition = () => {
-        setLeftPos(Math.random()*90);
-        setTopPos(Math.random()*90);
+        setLeftPos(Math.random() * 90);
+        setTopPos(Math.random() * 90);
     }
 
+    const scoreHandler = async () => {
+        const timeOfPress = buttonPressTimes.map((index) => index - buttonPressTimes[0])
+        setButtonPressTimes([])
+        const avgTime = timeOfPress[timeOfPress.length - 1] / (timeOfPress.length - 1);
+        console.log(avgTime)
+        console.log(Math.round(100000 / avgTime))
+        const runObj = {
+            runtime: timeOfPress[timeOfPress.length - 1],
+            targetNumber: (timeOfPress.length - 1),
+            score: Math.round(100000 / avgTime)
+        }
+        console.log("RunObj: ", runObj)
+        try {
+            const { data } = await addRun({
+                variables: { ...runObj },
+            });
+            console.log("DATA Return", data)
+            console.log(data.addRun.token)
+            localStorage.setItem("id_token", data.addRun.token)
+        } catch (e) {
+            console.error(e);
+        }
+    }
     const endGame = (intervalNum) => {
         setGameState(0);
         setCountdownClock(20);
         setTargetCounter(0);
         clearInterval(intervalNum)
+
     }
-    
+
     const readyHandler = (e) => {
         if (intervalId != 0) {
             clearInterval(intervalId);
@@ -55,6 +82,7 @@ export default function GameProvider({ children }) {
             setTargetCounter(targetCounter + 1);
             updatePosition();
             if (targetCounter >= 9) {
+
                 endGame(intervalId);
             }
         }
@@ -62,15 +90,16 @@ export default function GameProvider({ children }) {
 
     return (
         <GameContext.Provider value={{
-            gameState, 
-            targetCounter, 
+            gameState,
+            targetCounter,
             countdownClock,
             leftPos,
             topPos,
             buttonPressTimes,
             intervalId,
-            renderTarget, 
+            renderTarget,
             readyHandler,
+            scoreHandler
         }}>
             {children}
         </GameContext.Provider>
