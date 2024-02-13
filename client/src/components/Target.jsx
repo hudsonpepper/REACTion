@@ -16,11 +16,10 @@ const Target = ({onClickHandler}) => {
         // top: 100 + '%',
     };
     let imgStyling = {
-        height: `${5}%`,
-        maxHeight: `${5}%`
+
     }
     return (
-        <button style={styling} className="max-w-3" onClick={onClickHandler}><img style={imgStyling} src="../../public/target.png"/></button>
+        <button style={styling} className="max-w-10" onClick={onClickHandler}><img style={imgStyling} src="../../public/target.png"/></button>
     )
 }
 

@@ -19,8 +19,8 @@ export default function GameProvider({ children }) {
 
 
     const updatePosition = () => {
-        setLeftPos(Math.random() * 90);
-        setTopPos(Math.random() * 90);
+        setLeftPos(10 + Math.random()*80);
+        setTopPos(10 + Math.random()*80);
     }
 
     const scoreHandler = async () => {
