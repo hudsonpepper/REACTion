@@ -5,9 +5,9 @@ export const GameContext = createContext();
 
 export const useTheme = () => useContext(GameContext);
 
-let intervalId;
 
 export default function GameProvider({ children }) {
+    const [intervalId, setIntervalId] = useState(0);
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
     const [countdownClock, setCountdownClock]= useState(20);
@@ -15,59 +15,48 @@ export default function GameProvider({ children }) {
     const [topPos, setTopPos]= useState(50);
     const [buttonPressTimes, setButtonPressTimes] = useState([]);
 
-    const updateGameState = (num) => {
-        return setGameState(num);
-    }
-
-    // const updateTargetCounter = (num) => {
-    //     return setTargetCounter(num);
-    // }
-
-    const updateCountdownClock = (num) => {
-        return setCountdownClock(num);
-    }
-
     const updatePosition = () => {
         setLeftPos(Math.random()*90);
         setTopPos(Math.random()*90);
     }
 
-    const endGame = (props) => {
-        clearInterval(intervalId);
-        updateGameState(0);
-        updateCountdownClock(20);
-        console.log(buttonPressTimes);
+    const endGame = (intervalNum) => {
+        setGameState(0);
+        setCountdownClock(20);
+        setTargetCounter(0);
+        clearInterval(intervalNum)
     }
-
+    
     const readyHandler = (e) => {
+        if (intervalId != 0) {
+            clearInterval(intervalId);
+        }
         e.preventDefault();
         setButtonPressTimes([Date.now()]);
         let clockActual = countdownClock;
-        setTargetCounter(0);
-        updateGameState(1);
+        setGameState(1);
         // call render target
         renderTarget(e);
         // start timer for game
-        intervalId = setInterval(() => {
+        let newInterval = setInterval(() => {
             clockActual = clockActual - 1;
-            updateCountdownClock(clockActual);
+            setCountdownClock(clockActual);
             if (clockActual <= 0) {
-                endGame();
+                endGame(newInterval);
             }
         }, 1000);
+        setIntervalId(newInterval)
     }
 
     const renderTarget = (e) => {
-        console.log("target Rerendered")
         setButtonPressTimes([...buttonPressTimes, Date.now()])
         if (gameState != 0) {
             setGameState(gameState * -1);
-            console.log(gameState);
             setTargetCounter(targetCounter + 1);
             updatePosition();
-        }
-        if (targetCounter >= 9) {
-            endGame();
+            if (targetCounter >= 9) {
+                endGame(intervalId);
+            }
         }
     }
 
@@ -79,6 +68,7 @@ export default function GameProvider({ children }) {
             leftPos,
             topPos,
             buttonPressTimes,
+            intervalId,
             renderTarget, 
             readyHandler,
         }}>
