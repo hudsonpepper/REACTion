@@ -1,8 +1,24 @@
+.overarching-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ready-btn {
+  border-radius: 10px;
+  border: black solid 2px;
+  padding: 0 20px;
+  margin-bottom: 5px;
+}
+
 .game-viewport {
   position: relative;
   background-color: bisque;
   height: 60vh;
   width: 70vw;
+  border-radius: 40px;
+  border: black 8px solid;
+  filter: drop-shadow(8px 8px 0 lightgray)
   /* padding-bottom: 7vw;
   padding-right: 7vw; */
 }
