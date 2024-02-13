@@ -5,6 +5,8 @@ export const GameContext = createContext();
 
 export const useTheme = () => useContext(GameContext);
 
+let intervalId;
+
 export default function GameProvider({ children }) {
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
@@ -27,6 +29,30 @@ export default function GameProvider({ children }) {
     const updatePosition = () => {
         setLeftPos(Math.random()*90);
         setTopPos(Math.random()*90);
+    }
+
+    const readyHandler = (e) => {
+        e.preventDefault();
+        e.target.setAttribute("disabled", "");
+        e.target.setAttribute("hidden", "");
+
+        let clockActual = countdownClock;
+        updateTargetCounter(0);
+        updateGameState(1);
+        // call render target
+        renderTarget(e);
+        // start timer for game
+        intervalId = setInterval(() => {
+            clockActual = clockActual - 1;
+            updateCountdownClock(clockActual);
+            if (clockActual <= 0) {
+                updateGameState(0);
+                e.target.removeAttribute("disabled", "");
+                e.target.removeAttribute("hidden", "");
+                clearInterval(intervalId)
+                updateCountdownClock(20);
+            }
+        }, 1000);
     }
 
     const renderTarget = (e) => {
@@ -52,9 +78,7 @@ export default function GameProvider({ children }) {
             leftPos,
             topPos,
             renderTarget, 
-            updateGameState, 
-            updateTargetCounter,
-            updateCountdownClock
+            readyHandler,
         }}>
             {children}
         </GameContext.Provider>
