@@ -1,7 +1,7 @@
-import Target from '../components/Target'
-import GameUI from '../components/GameUI'
-import { useTheme } from '../utils/GameContext';
-
+import Target from '../../components/Target'
+import GameUI from '../../components/GameUI'
+import { useTheme } from '../../utils/GameContext';
+import './style.css'
 const GamePage = () => {    
 
     const {gameState, renderTarget} = useTheme();
