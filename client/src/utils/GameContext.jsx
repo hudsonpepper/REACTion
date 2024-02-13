@@ -13,6 +13,7 @@ export default function GameProvider({ children }) {
     const [countdownClock, setCountdownClock]= useState(20);
     const [leftPos, setLeftPos]= useState(50);
     const [topPos, setTopPos]= useState(50);
+    const [buttonPressTimes, setButtonPressTimes] = useState([]);
 
     const updateGameState = (num) => {
         return setGameState(num);
@@ -35,11 +36,12 @@ export default function GameProvider({ children }) {
         clearInterval(intervalId);
         updateGameState(0);
         updateCountdownClock(20);
+        console.log(buttonPressTimes);
     }
 
     const readyHandler = (e) => {
         e.preventDefault();
-
+        setButtonPressTimes([Date.now()]);
         let clockActual = countdownClock;
         setTargetCounter(0);
         updateGameState(1);
@@ -57,6 +59,7 @@ export default function GameProvider({ children }) {
 
     const renderTarget = (e) => {
         console.log("target Rerendered")
+        setButtonPressTimes([...buttonPressTimes, Date.now()])
         if (gameState != 0) {
             setGameState(gameState * -1);
             console.log(gameState);
@@ -75,6 +78,7 @@ export default function GameProvider({ children }) {
             countdownClock,
             leftPos,
             topPos,
+            buttonPressTimes,
             renderTarget, 
             readyHandler,
         }}>
