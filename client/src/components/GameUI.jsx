@@ -17,17 +17,17 @@ const GameUI = () => {
         // call render target
         renderTarget(e);
         // start timer for game
-        intervalId = setInterval(() => {
-            clockActual = clockActual - 1;
-            updateCountdownClock(clockActual);
-            if (clockActual <= 0) {
-                updateGameState(0);
-                e.target.removeAttribute("disabled", "");
-                e.target.removeAttribute("hidden", "");
-                clearInterval(intervalId)
-                updateCountdownClock(20);
-            }
-        }, 1000);
+        // intervalId = setInterval(() => {
+        //     clockActual = clockActual - 1;
+        //     updateCountdownClock(clockActual);
+        //     if (clockActual <= 0) {
+        //         updateGameState(0);
+        //         e.target.removeAttribute("disabled", "");
+        //         e.target.removeAttribute("hidden", "");
+        //         clearInterval(intervalId)
+        //         updateCountdownClock(20);
+        //     }
+        // }, 1000);
     }
     return (
         <div className='game-header-bar'>

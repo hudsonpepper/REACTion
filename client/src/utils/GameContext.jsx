@@ -25,22 +25,25 @@ export default function GameProvider({ children }) {
     }
 
     const updatePosition = () => {
-        setLeftPos(Math.random()*90);
-        setTopPos(Math.random()*90);
+        setLeftPos(1*30);
+        setTopPos(1*30);
     }
 
     const renderTarget = (e) => {
+        console.log("target Rerendered")
         if (gameState != 0) {
             setGameState(gameState * -1);
             updatePosition();
             setTargetCounter(targetCounter + 1);
         }
-        if (targetCounter >= 9) {
+        if (targetCounter >= 9 || countdownClock <= 0) {
             setGameState(0);
+            setCountdownClock(20)
+            console.log("game over")
             e.target.parentElement.children[0].removeAttribute("disabled", "");
             e.target.parentElement.children[0].removeAttribute("hidden", "");
-            clearInterval(intervalId);
-            // console.log(targetCounter, countdownClock);
+            // clearInterval(intervalId);
+            console.log(targetCounter, countdownClock);
         }
     }
 
