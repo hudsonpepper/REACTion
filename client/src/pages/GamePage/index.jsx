@@ -4,7 +4,7 @@ import { useTheme } from '../../utils/GameContext';
 import './style.css'
 const GamePage = () => {    
 
-    const {gameState, renderTarget} = useTheme();
+    const {gameState, renderTarget, buttonPressTimes} = useTheme();
 
     return (
         <div className='overarching-container'>
