@@ -5,6 +5,8 @@ export const GameContext = createContext();
 
 export const useTheme = () => useContext(GameContext);
 
+let intervalId;
+
 export default function GameProvider({ children }) {
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
@@ -16,34 +18,53 @@ export default function GameProvider({ children }) {
         return setGameState(num);
     }
 
-    const updateTargetCounter = (num) => {
-        return setTargetCounter(num);
-    }
+    // const updateTargetCounter = (num) => {
+    //     return setTargetCounter(num);
+    // }
 
     const updateCountdownClock = (num) => {
         return setCountdownClock(num);
     }
 
     const updatePosition = () => {
-        setLeftPos(1*30);
-        setTopPos(1*30);
+        setLeftPos(Math.random()*90);
+        setTopPos(Math.random()*90);
+    }
+
+    const endGame = (props) => {
+        clearInterval(intervalId);
+        updateGameState(0);
+        updateCountdownClock(20);
+    }
+
+    const readyHandler = (e) => {
+        e.preventDefault();
+
+        let clockActual = countdownClock;
+        setTargetCounter(0);
+        updateGameState(1);
+        // call render target
+        renderTarget(e);
+        // start timer for game
+        intervalId = setInterval(() => {
+            clockActual = clockActual - 1;
+            updateCountdownClock(clockActual);
+            if (clockActual <= 0) {
+                endGame();
+            }
+        }, 1000);
     }
 
     const renderTarget = (e) => {
         console.log("target Rerendered")
         if (gameState != 0) {
             setGameState(gameState * -1);
-            updatePosition();
+            console.log(gameState);
             setTargetCounter(targetCounter + 1);
+            updatePosition();
         }
-        if (targetCounter >= 9 || countdownClock <= 0) {
-            setGameState(0);
-            setCountdownClock(20)
-            console.log("game over")
-            e.target.parentElement.children[0].removeAttribute("disabled", "");
-            e.target.parentElement.children[0].removeAttribute("hidden", "");
-            // clearInterval(intervalId);
-            console.log(targetCounter, countdownClock);
+        if (targetCounter >= 9) {
+            endGame();
         }
     }
 
@@ -55,9 +76,7 @@ export default function GameProvider({ children }) {
             leftPos,
             topPos,
             renderTarget, 
-            updateGameState, 
-            updateTargetCounter,
-            updateCountdownClock
+            readyHandler,
         }}>
             {children}
         </GameContext.Provider>
