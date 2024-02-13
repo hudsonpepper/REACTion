@@ -1,7 +1,11 @@
+import * as React from "react";
 import Button from "@mui/material/Button";
 import Name from "../Header/header-name";
 import { Link, useLocation } from "react-router-dom";
 import Auth from "../../utils/auth";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
 import {
   createTheme,
   alpha,
@@ -28,18 +32,34 @@ const Nav = () => {
     event.preventDefault();
     Auth.logout();
   };
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
       <section className="headerComponentsLayout">
         <ThemeProvider theme={theme}>
           <Link to="/">
-            <Button variant="contained" color="Grey">
+            <Button
+              variant="contained"
+              color="Grey"
+              className="invisible md:visible"
+            >
               Home
             </Button>
           </Link>
           <Link to="/leaderboard">
-            <Button variant="contained" color="Grey">
+            <Button
+              variant="contained"
+              color="Grey"
+              className="invisible md:visible"
+            >
               Leaderboard
             </Button>
           </Link>
@@ -47,30 +67,98 @@ const Nav = () => {
           {Auth.loggedIn() ? (
             <>
               <Link to="/me">
-                <Button variant="contained" color="Grey">
+                <Button
+                  variant="contained"
+                  color="Grey"
+                  className="invisible md:visible"
+                >
                   {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
                   {Auth.getProfile().authenticatedPerson.username}'s profile
                 </Button>
               </Link>
-              <Button variant="contained" color="Grey" onClick={logout}>
+              <Button
+                variant="contained"
+                color="Grey"
+                onClick={logout}
+                className="invisible md:visible"
+              >
                 Logout
               </Button>
             </>
           ) : (
             <>
               <Link to="/login">
-                <Button variant="contained" color="Grey">
+                <Button
+                  variant="contained"
+                  color="Grey"
+                  className="invisible md:visible"
+                >
                   Login
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button variant="contained" color="Grey">
+                <Button
+                  variant="contained"
+                  color="Grey"
+                  className="invisible md:visible"
+                >
                   Sign-Up
                 </Button>
               </Link>
             </>
           )}
         </ThemeProvider>
+
+        <div className="visible md:invisible mr:50px sm:grid-rows-12">
+          <Button
+            id="fade-button"
+            aria-controls={open ? "fade-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            Reaction
+          </Button>
+          <Menu
+            id="fade-menu"
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Fade}
+          >
+            {Auth.loggedIn() ? (
+              <>
+                <Link to="/me">
+                  <MenuItem>
+                    {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
+                    {Auth.getProfile().authenticatedPerson.username}'s profile
+                  </MenuItem>
+                </Link>
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <MenuItem onClick={handleClose}>Login</MenuItem>
+                </Link>
+                <Link to="/signup">
+                  <MenuItem onClick={handleClose}>Sign-Up</MenuItem>
+                </Link>
+              </>
+            )}
+
+            <Link to="/me">
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+            </Link>
+            <Link to="/leaderboard">
+              <MenuItem onClick={handleClose}>Leaderboard</MenuItem>
+            </Link>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
       </section>
     </>
   );
