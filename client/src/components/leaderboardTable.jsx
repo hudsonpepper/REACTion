@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client";
 import * as React from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
@@ -18,29 +19,15 @@ import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import { QUERY_HIGHSCORES } from "../utils/queries";
 
-function createData(id, name, Time) {
-  return {
-    id,
-    name,
-    Time,
-  };
+function getHighscores() {
+  const { loading, error, data } = useQuery(QUERY_HIGHSCORES);
+  if (loading) return [];
+  if (error) return [];
+  console.log(data);
+  console.log(data.users[0].username);
+  console.log(data.users[0].statistics.highScore);
+  return data.users;
 }
-
-const rows = [
-  createData(1, "IAmBadAtCoding", 2),
-  createData(2, "Donut", 5),
-  createData(3, "Eclair", 3),
-  createData(4, "Frozen yoghurt", 6),
-  createData(5, "Gingerbread", 7),
-  createData(6, "Honeycomb", 2),
-  createData(7, "Ice cream sandwich", 8),
-  createData(8, "Jelly Bean", 23),
-  createData(9, "KitKat", 25),
-  createData(10, "Lollipop", 78),
-  createData(11, "Marshmallow", 27),
-  createData(12, "Nougat", 26),
-  createData(13, "Oreo", 18),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -175,6 +162,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function LeaderboardComp() {
+  let rows = getHighscores();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -264,17 +252,17 @@ export default function LeaderboardComp() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
+                const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, row._id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.id}
+                    key={row._id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
@@ -285,9 +273,11 @@ export default function LeaderboardComp() {
                       scope="row"
                       padding="none"
                     >
-                      {row.name}
+                      {row.username}
                     </TableCell>
-                    <TableCell align="left">{row.Time}</TableCell>
+                    <TableCell align="left">
+                      {row.statistics.highScore}
+                    </TableCell>
                   </TableRow>
                 );
               })}
