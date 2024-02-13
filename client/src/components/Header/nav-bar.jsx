@@ -38,9 +38,9 @@ const Nav = () => {
               Home
             </Button>
           </Link>
-          <Link to="/Portfolio">
+          <Link to="/leaderboard">
             <Button variant="contained" color="Grey">
-              HighScores
+              Leaderboard
             </Button>
           </Link>
           <Name />
