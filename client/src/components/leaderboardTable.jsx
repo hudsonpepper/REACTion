@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import Auth from "../utils/auth";
 import * as React from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
@@ -17,16 +18,28 @@ import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
-import { QUERY_HIGHSCORES } from "../utils/queries";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { QUERY_HIGHSCORES, QUERY_ME } from "../utils/queries";
 
 function getHighscores() {
   const { loading, error, data } = useQuery(QUERY_HIGHSCORES);
   if (loading) return [];
   if (error) return [];
-  console.log(data);
-  console.log(data.users[0].username);
-  console.log(data.users[0].statistics.highScore);
+  // console.log(data);
+  // console.log(data.users[0].username);
+  // console.log(data.users[0].statistics.highScore);
   return data.users;
+}
+function getUserStat() {
+  const { loading, error, data } = useQuery(QUERY_ME);
+  if (loading) return [];
+  if (error) return [];
+  let info = {
+    email: data.me.email,
+    stats: data.me.statistics,
+  };
+  return info;
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -68,7 +81,7 @@ const headCells = [
     id: "Time",
     numeric: true,
     disablePadding: false,
-    label: "Time(in seconds)",
+    label: "Highscore",
   },
 ];
 
@@ -163,6 +176,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function LeaderboardComp() {
   let rows = getHighscores();
+  let userStat = getUserStat();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -234,6 +248,20 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <Card sx={{ maxWidth: 345 }}>
+        {console.log(userStat.email)}
+        {console.log(userStat.stats)}
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {Auth.getProfile().authenticatedPerson.username}'s Statistics
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <p>Average Score: {userStat.stats.avgScore}</p>
+            <p>High-Score: {userStat.stats.highScore}</p>
+            <p>Games Played: {userStat.stats.runNumber}</p>
+          </Typography>
+        </CardContent>
+      </Card>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
