@@ -19,7 +19,6 @@ const Target = ({onClickHandler}) => {
         height: `${5}%`,
         maxHeight: `${5}%`
     }
-    console.log("I re-rendered!");
     return (
         <button style={styling} className="max-w-3" onClick={onClickHandler}><img style={imgStyling} src="../../public/target.png"/></button>
     )
