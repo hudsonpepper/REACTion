@@ -6,12 +6,7 @@ const GameUI = () => {
     
     return (
         <div className='game-header-bar'>
-            <h1>REACTion</h1>
-            <ul>
-                <li>Profile / Sign-Up</li>
-                <li>Leaderboard</li>
-            </ul>
-            <button onClick={readyHandler}>Ready?</button>
+            {gameState == 0 ? <button onClick={readyHandler}>Ready?</button> : null }
             {gameState == 0 ? null : <h2>TIME REMAINING: {countdownClock}</h2>}
             {gameState == 0 ? null : <h2>TARGETS HIT: {targetCounter}</h2>}
         </div>
