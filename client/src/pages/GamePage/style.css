@@ -3,8 +3,7 @@
   background-color: bisque;
   height: 60vh;
   width: 70vw;
+  /* padding-bottom: 7vw;
+  padding-right: 7vw; */
 }
 
-#target {
-  position: absolute;
-}
