@@ -14,11 +14,10 @@ const Target = ({ onClickHandler }) => {
     // left: 100 + '%',
     // top: 100 + '%',
   };
-
-  console.log("I re-rendered!");
+  let imgStyling = {};
   return (
-    <button style={styling} className="max-w-14" onClick={onClickHandler}>
-      <img src="../../public/target.png" />
+    <button style={styling} className="max-w-10" onClick={onClickHandler}>
+      <img style={imgStyling} src="../../public/target.png" />
     </button>
   );
 };
