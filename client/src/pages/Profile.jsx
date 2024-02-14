@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { LineChart } from '@mui/x-charts/LineChart';
@@ -7,6 +8,8 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const Profile = () => {
+  const [selectedAttempt, setSelectedAttempt] = useState(1);
+
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -44,6 +47,15 @@ const Profile = () => {
     graphDataX.push(i + 1);
   }
 
+  const dropdownClicker = (e) => {
+    e.preventDefault();
+    setSelectedAttempt(e.target[Object.keys(e.target)[1]].value);
+  }
+
+  const renderDropdownOptions = (attemptNum) => {
+    return <li><a value={attemptNum} onClick={dropdownClicker}>Run #{attemptNum}</a></li>;
+  }
+
   return (
     <div>
       <div className="flex-row justify-center mb-3">
@@ -53,28 +65,36 @@ const Profile = () => {
 
         <div className="col-12 col-md-10 mb-5 flex-row flex-wrap-reverse justify-around">
           <div className='col-10 col-md-8 mb-12 profile-boxes'>
-            <h1>Run Details</h1>
-            {/* user.priorRuns[selected] SHOULD GO WHERE EACH CURLY BRACE IS */}
+            <div className="flex-row justify-evenly">
+              <h1>Run Details</h1>
+              <details className="dropdown dropdown-top">
+                    <summary className="m-1 dropdown-btn btn">Select Run</summary>
+                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box w-52">
+                        {graphDataX.map(renderDropdownOptions)}
+                    </ul>
+                </details>
+            </div>
+            {/* user.priorRuns[selectedAttempt - 1] SHOULD GO WHERE EACH CURLY BRACE IS */}
              <div className="flex-row justify-evenly">
               <div>
                 <h2>Date Played</h2>
-                <p>{}Example Date</p>
+                <p>{user.priorRuns[selectedAttempt - 1].datePlayed}</p>
               </div>
               <div>
                 <h2>Run Time</h2>
-                <p>{}Seconds</p>
+                <p>{user.priorRuns[selectedAttempt - 1].runtime / 1000} sec</p>
               </div>
               <div>
                 <h2>Targets Hit</h2>
-                <p>{}10</p>
+                <p>{user.priorRuns[selectedAttempt - 1].targetNumber}</p>
               </div>
               <div>
                 <h2>Difficulty</h2>
-                <p>{}Extra</p>
+                <p>{user.priorRuns[selectedAttempt - 1].difficultyModifier}</p>
               </div>
               <div>
                 <h2>SCORE</h2>
-                <p>{}110</p>
+                <p>{user.priorRuns[selectedAttempt - 1].score}</p>
               </div>
              </div>
           </div>
