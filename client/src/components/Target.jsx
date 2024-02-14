@@ -1,5 +1,5 @@
-import '../App.css'
-import { useTheme } from '../utils/GameContext';
+import "../App.css";
+import { useTheme } from "../utils/GameContext";
 
 const Target = ({ onClickHandler }) => {
     // onclick, delete this and render new button (get new button as prop from create portal)

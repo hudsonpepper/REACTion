@@ -6,7 +6,6 @@ export const GameContext = createContext();
 
 export const useTheme = () => useContext(GameContext);
 
-
 export default function GameProvider({ children }) {
     const [intervalId, setIntervalId] = useState(0);
     const [gameState, setGameState] = useState(0);
