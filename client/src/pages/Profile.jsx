@@ -37,6 +37,13 @@ const Profile = () => {
     );
   }
 
+  const graphDataY = [];
+  const graphDataX = [];
+  for (let i = 0; i < user.priorRuns.length; i++) {
+    graphDataY.push(user.priorRuns[i].score);
+    graphDataX.push(i + 1);
+  }
+
   return (
     <div>
       <div className="flex-row justify-center mb-3">
@@ -45,7 +52,7 @@ const Profile = () => {
         </h2>
 
         <div className="col-12 col-md-10 mb-5 flex-row flex-wrap-reverse justify-around">
-          <div className='col-10 col-md-6 mb-12 profile-boxes'>
+          <div className='col-10 col-md-8 mb-12 profile-boxes'>
             <h1>Run Details</h1>
             {/* user.priorRuns[selected] SHOULD GO WHERE EACH CURLY BRACE IS */}
              <div className="flex-row justify-evenly">
@@ -62,12 +69,16 @@ const Profile = () => {
                 <p>{}10</p>
               </div>
               <div>
+                <h2>Difficulty</h2>
+                <p>{}Extra</p>
+              </div>
+              <div>
                 <h2>SCORE</h2>
                 <p>{}110</p>
               </div>
              </div>
           </div>
-          <div className='col-10 col-md-4 mb-12 profile-boxes'>
+          <div className='col-10 col-md-3 mb-12 profile-boxes'>
             <h1>User Info</h1>
             <div className='flex-row justify-between'>
               <p>Username:</p>
@@ -94,11 +105,11 @@ const Profile = () => {
             {/* yAxis should be scores */}
             <LineChart 
               xAxis={[
-                { data: [1,2,3,4,5], 
+                { data: graphDataX, 
                   scaleType: 'point',
                   label: 'Attempt #'
                 }]}
-              series={[{ data: [90,70,100,85,110], label: 'Score', area: true, color: '#373F51'}]}
+              series={[{ data: graphDataY, label: 'Score', area: true, color: '#373F51'}]}
               height={600}
             />
           </div>
