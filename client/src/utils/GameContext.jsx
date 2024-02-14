@@ -12,15 +12,20 @@ export default function GameProvider({ children }) {
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
 
-    const [leftPos, setLeftPos] = useState(50);
-    const [topPos, setTopPos] = useState(50);
+    const [leftPosInitial, setLeftPosInitial] = useState(50);
+    const [topPosInitial, setTopPosInitial] = useState(50);
+    const [leftPosFinal, setLeftPosFinal] = useState(50);
+    const [topPosFinal, setTopPosFinal] = useState(50);
+
     const [buttonPressTimes, setButtonPressTimes] = useState([]);
     const [addRun, { error, data }] = useMutation(ADD_RUN);
 
 
     const updatePosition = () => {
-        setLeftPos(10 + Math.random()*80);
-        setTopPos(10 + Math.random()*80);
+        setLeftPosInitial(10 + Math.random()*80);
+        setTopPosInitial(10 + Math.random()*80);
+        setLeftPosFinal(10 + Math.random()*80);
+        setTopPosFinal(10 + Math.random()*80);
     }
 
     const scoreHandler = async () => {
@@ -73,14 +78,17 @@ export default function GameProvider({ children }) {
             setGameState,
             targetCounter,
             setTargetCounter,
-            leftPos,
-            topPos,
+            leftPosInitial,
+            topPosInitial,
+            leftPosFinal,
+            topPosFinal,
             buttonPressTimes,
             setButtonPressTimes,
             intervalId,
             setIntervalId,
             renderTarget,
-            scoreHandler
+            scoreHandler,
+            endGame
         }}>
             {children}
         </GameContext.Provider>

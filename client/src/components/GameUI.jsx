@@ -3,7 +3,7 @@ import { useTheme } from '../utils/GameContext';
 import Auth from '../utils/auth';
 
 const GameUI = () => {
-    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler} = useTheme();
+    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler, endGame} = useTheme();
     const [countdownClock, setCountdownClock] = useState(20);
 
     const readyHandler = (e) => {
@@ -14,9 +14,9 @@ const GameUI = () => {
         setTargetCounter(0)
         e.preventDefault();
         setButtonPressTimes([Date.now()]);
-        let clockActual = countdownClock;
+        let clockActual = 20;
+        // Edits game state to allow for target rendering
         setGameState(1);
-        // call render target
         // start timer for game
         let newInterval = setInterval(() => {
             clockActual = clockActual - 1;
