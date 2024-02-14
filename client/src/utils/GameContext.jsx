@@ -58,16 +58,29 @@ export default function GameProvider({ children }) {
         }
     }
 
+    const calcModifier = () => {
+        let val1;
+        let val2;
+        if (movement == 0) val1 = 0.7;
+        else if (movement == 1) val1 = 1;
+        else if (movement == 2) val1 = 1.2;
+        if (speed == 0.5) val2 = 0.6;
+        else if (speed == 1) val2 = 1;
+        else if (speed == 2) val2 = 1.3;
+        return val1*val2;
+    }
+
     const scoreHandler = async () => {
         const timeOfPress = buttonPressTimes.map((index) => index - buttonPressTimes[0])
         setButtonPressTimes([])
         const avgTime = timeOfPress[timeOfPress.length - 1] / (timeOfPress.length - 1);
         console.log(avgTime)
         console.log(Math.round(100000 / avgTime))
+        console.log(calcModifier());
         const runObj = {
             runtime: timeOfPress[timeOfPress.length - 1],
             targetNumber: (timeOfPress.length - 1),
-            
+            difficultyModifier: calcModifier(),
             score: Math.round(100000 / avgTime)
         }
         console.log("RunObj: ", runObj)
@@ -98,7 +111,7 @@ export default function GameProvider({ children }) {
 
     const renderTarget = (e) => {
         setButtonPressTimes([...buttonPressTimes, Date.now()])
-        setIsAnimated(true)
+        // setIsAnimated(true)
         //setIsBezier(true)
         if (gameState != 0) {
             setGameState(gameState * -1);

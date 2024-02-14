@@ -7,6 +7,7 @@ query User($username: String!) {
     email
     priorRuns {
       datePlayed
+      difficultyModifier
       runtime
       score
       targetNumber
@@ -46,6 +47,7 @@ query Me {
     priorRuns {
       datePlayed
       runtime
+      difficultyModifier
       score
       targetNumber
     }

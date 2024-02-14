@@ -32,6 +32,10 @@ const userSchema = new Schema({
           type: Number,
           default: 0,
         },
+        difficultyModifier: {
+          type: Number,
+          default: 1,
+        },
         targetNumber: {
           type: Number,
           default: 0,
