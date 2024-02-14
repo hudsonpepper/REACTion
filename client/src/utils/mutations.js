@@ -44,8 +44,8 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_RUN = gql`
-  mutation AddRun($datePlayed: String, $runtime: Float, $targetNumber: Int, $score: Int) {
-    addRun(datePlayed: $datePlayed, runtime: $runtime, targetNumber: $targetNumber, score: $score) {
+  mutation AddRun($datePlayed: String, $runtime: Float, $difficultyModifier: Float, $targetNumber: Int, $score: Int) {
+    addRun(datePlayed: $datePlayed, runtime: $runtime, targetNumber: $targetNumber, score: $score, difficultyModifier: $difficultyModifier) {
       token
       user {
         _id
@@ -54,9 +54,8 @@ export const ADD_RUN = gql`
           runtime
           score
           targetNumber
-        }
-        priorRuns {
           datePlayed
+          difficultyModifier
         }
         statistics {
           avgScore
