@@ -11,16 +11,21 @@ export default function GameProvider({ children }) {
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
 
+    // Game Settings
+    const [movement, setMovement] = useState(1);
+    const [speed, setSpeed] = useState(1);
+    const [difficultyModifier, setDifficultyModifier] = useState(1)
+
     const [leftPos, setLeftPos] = useState(50);
     const [topPos, setTopPos] = useState(50);
 
     // Animation Endpoint
-    const [isAnimated, setIsAnimated] = useState(false);
+    // const [isAnimated, setIsAnimated] = useState(false);
     const [leftPosOffset, setLeftPosOffset] = useState(0);
     const [topPosOffset, setTopPosOffset] = useState(0);
 
     // Animation Bezier
-    const [isBezier, setIsBezier] = useState(false);
+    // const [isBezier, setIsBezier] = useState(false);
     const [bezierP1x, setBezierP1x] = useState(1 / 3);
     const [bezierP1y, setBezierP1y] = useState(1 / 3);
     const [bezierP2x, setBezierP2x] = useState(2 / 3);
@@ -33,15 +38,20 @@ export default function GameProvider({ children }) {
     const updatePosition = () => {
         setLeftPos(10 + Math.random() * 80);
         setTopPos(10 + Math.random() * 80);
-        if (isAnimated) {
+        if (movement >= 1) {
             setLeftPosOffset(Math.random() * 30);
             setTopPosOffset(Math.random() * 30);
-            if (isBezier) {
+            if (movement >= 2) {
             // Change animation from linear to bezier
-            setBezierP1x(Math.random());
-            setBezierP1y(Math.random());
-            setBezierP2x(Math.random());
-            setBezierP2y(Math.random());
+                setBezierP1x(Math.random());
+                setBezierP1y(Math.random());
+                setBezierP2x(Math.random());
+                setBezierP2y(Math.random());
+            } else {
+                setBezierP1x(1 / 3);
+                setBezierP1y(1 / 3);
+                setBezierP2x(2 / 3);
+                setBezierP2y(2 / 3);
             }
         }
     }
@@ -106,12 +116,8 @@ export default function GameProvider({ children }) {
             setTargetCounter,
             leftPos,
             topPos,
-            isAnimated,
-            setIsAnimated,
             leftPosOffset,
             topPosOffset,
-            isBezier,
-            setIsBezier,
             bezierP1x,
             bezierP1y,
             bezierP2x,
@@ -123,7 +129,13 @@ export default function GameProvider({ children }) {
             renderTarget,
             scoreHandler,
             earlyEnd,
-            endGame
+            endGame,
+            speed,
+            setSpeed,
+            movement,
+            setMovement,
+            difficultyModifier,
+            setDifficultyModifier
         }}>
             {children}
         </GameContext.Provider>

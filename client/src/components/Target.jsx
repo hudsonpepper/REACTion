@@ -3,7 +3,7 @@ import { useTheme } from "../utils/GameContext";
 
 const Target = ({ onClickHandler }) => {
     // onclick, delete this and render new button (get new button as prop from create portal)
-    const { leftPos, topPos, leftPosOffset, topPosOffset, bezierP1x, bezierP1y, bezierP2x, bezierP2y, } = useTheme();
+    const { leftPos, topPos, leftPosOffset, topPosOffset, bezierP1x, bezierP1y, bezierP2x, bezierP2y, speed} = useTheme();
     console.log("I rerendered")
     //console.log(`Left: ${leftPos} w/offset ${leftPosOffset} || Top: ${topPos} w/offset ${topPosOffset}`)
     console.log(bezierP1x, bezierP1y, bezierP2x, bezierP2y)
@@ -45,7 +45,7 @@ const Target = ({ onClickHandler }) => {
         position: 'absolute',
         left: (leftPos) + '%',
         top: (topPos) + '%',
-        animation: `moveBackAndForth 2s cubic-bezier(${bezierP1x}, ${bezierP1y}, ${bezierP2x}, ${bezierP2y}) infinite alternate`,
+        animation: `moveBackAndForth ${speed}s cubic-bezier(${bezierP1x}, ${bezierP1y}, ${bezierP2x}, ${bezierP2y}) infinite alternate`,
         // left: 100 + '%',
         // top: 100 + '%',
     };
