@@ -19,12 +19,12 @@ const GameUI = () => {
         setGameState(1);
         // start timer for game
         let newInterval = setInterval(() => {
-            clockActual = clockActual - 1;
-            setCountdownClock(clockActual);
+            clockActual = clockActual - .1;
+            setCountdownClock(clockActual.toFixed(1));
             if (clockActual <= 0) {
                 endGame(newInterval);
             }
-        }, 1000);
+        }, 100);
         setIntervalId(newInterval)
     }
     return (
