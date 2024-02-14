@@ -76,14 +76,16 @@ const Nav = () => {
                   {Auth.getProfile().authenticatedPerson.username}'s profile
                 </Button>
               </Link>
-              <Button
-                variant="contained"
-                color="Grey"
-                onClick={logout}
-                className="invisible md:visible"
-              >
-                Logout
-              </Button>
+              <Link to="/">
+                <Button
+                  variant="contained"
+                  color="Grey"
+                  onClick={logout}
+                  className="invisible md:visible"
+                >
+                  Logout
+                </Button>
+              </Link>
             </>
           ) : (
             <>
@@ -134,7 +136,7 @@ const Nav = () => {
                 <Link to="/me">
                   <MenuItem>
                     {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
-                    {Auth.getProfile().authenticatedPerson.username}'s profile
+                    {Auth.getProfile().authenticatedPerson.username}'s Profile
                   </MenuItem>
                 </Link>
                 <MenuItem onClick={logout}>Logout</MenuItem>
