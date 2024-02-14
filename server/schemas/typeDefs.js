@@ -11,8 +11,10 @@ const typeDefs = `
   type Run {
     datePlayed: String
     runtime: Float
+    difficultyModifier: Float
     targetNumber: Int
     score: Int
+
   }
 
   type Statistics {
@@ -36,7 +38,7 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addRun(datePlayed: String, runtime: Float, targetNumber: Int, score: Int): Auth
+    addRun(datePlayed: String, runtime: Float, difficultyModifier: Float, targetNumber: Int, score: Int): Auth
   }
 `;
 
