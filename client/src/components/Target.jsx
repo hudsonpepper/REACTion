@@ -3,13 +3,13 @@ import { useTheme } from '../utils/GameContext';
 
 const Target = ({ onClickHandler }) => {
     // onclick, delete this and render new button (get new button as prop from create portal)
-    const { leftPos, topPos, leftPosOffset, topPosOffset } = useTheme();
+    const { leftPos, topPos, leftPosOffset, topPosOffset, bezierP1x, bezierP1y, bezierP2x, bezierP2y, } = useTheme();
     console.log("I rerendered")
-    console.log(`Left: ${leftPos} w/offset ${leftPosOffset} || Top: ${topPos} w/offset ${topPosOffset}`)
-
+    //console.log(`Left: ${leftPos} w/offset ${leftPosOffset} || Top: ${topPos} w/offset ${topPosOffset}`)
+    console.log(bezierP1x, bezierP1y, bezierP2x, bezierP2y)
     let topDirection, leftDirection;
 
-    if(leftPos + leftPosOffset > 90) {
+    if (leftPos + leftPosOffset > 90) {
         leftDirection = -1;
     }
     else if (leftPos - leftPosOffset < 10) {
@@ -19,9 +19,9 @@ const Target = ({ onClickHandler }) => {
         // Randomizes between +-1: Math.round(Math.random()) randomly picks 0 or 1, *2 makes 0 or 2, -1 makes -1 or 1
         leftDirection = (Math.round(Math.random()) * 2) - 1
     }
-    const leftPosFinal = leftPos + leftPosOffset*leftDirection
+    const leftPosFinal = leftPos + leftPosOffset * leftDirection
 
-    if(topPos + topPosOffset > 90) {
+    if (topPos + topPosOffset > 90) {
         topDirection = -1;
     }
     else if (topPos - topPosOffset < 10) {
@@ -31,8 +31,8 @@ const Target = ({ onClickHandler }) => {
         // Randomizes between +-1: Math.round(Math.random()) randomly picks 0 or 1, *2 makes 0 or 2, -1 makes -1 or 1
         topDirection = (Math.round(Math.random()) * 2) - 1
     }
-    const topPosFinal = topPos + topPosOffset*topDirection
-    console.log(`Left: ${leftPos} -> ${leftPosFinal} || Top: ${topPos} -> ${topPosFinal}`)
+    const topPosFinal = topPos + topPosOffset * topDirection
+    //console.log(`Left: ${leftPos} -> ${leftPosFinal} || Top: ${topPos} -> ${topPosFinal}`)
     // insert math and set position
     const keyframes = {
         '@keyframes moveBackAndForth': {
@@ -45,7 +45,7 @@ const Target = ({ onClickHandler }) => {
         position: 'absolute',
         left: (leftPos) + '%',
         top: (topPos) + '%',
-        animation: `moveBackAndForth 1s linear infinite alternate`,
+        animation: `moveBackAndForth 1s cubic-bezier(${bezierP1x}, ${bezierP1y}, ${bezierP2x}, ${bezierP2y}) infinite alternate`,
         // left: 100 + '%',
         // top: 100 + '%',
     };
@@ -57,7 +57,7 @@ const Target = ({ onClickHandler }) => {
             {/* <style>
                 {`@keyframes moveBackAndForth: {
                     0% { left: ${leftPos}%; top: ${topPos}%; },
-                    100% {{ left: ${leftPosFinal}%; top: ${topPosOffset}%}; }
+                    100% {{ left: ${leftPosFinal}%; top: ${topPosFinal}%}; }
                 }`}
             </style> */}
             <style>{`${Object.keys(keyframes).map((key) => key + '{' + Object.keys(keyframes[key]).map((keyframe) => keyframe + '{' + Object.keys(keyframes[key][keyframe]).map((property) => property + ':' + keyframes[key][keyframe][property]).join(';') + '}').join('') + '}').join('')}`}</style>
