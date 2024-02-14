@@ -3,7 +3,7 @@ import { useTheme } from '../utils/GameContext';
 import Auth from '../utils/auth';
 
 const GameUI = () => {
-    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler, endGame, earlyEnd, setSpeed, movement, setMovement, timeSetting, setTimeSetting, targetSetting, setTargetSetting} = useTheme();
+    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler, endGame, earlyEnd, speed, setSpeed, movement, setMovement, timeSetting, setTimeSetting, targetSetting, setTargetSetting} = useTheme();
     const [countdownClock, setCountdownClock] = useState(20);
 
     const readyHandler = (e) => {
@@ -60,33 +60,33 @@ const GameUI = () => {
             <div className='flex-row'>
                 <details className="dropdown dropdown-top">
                     <summary className="m-1 dropdown-btn btn">Movement</summary>
-                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box w-52">
-                        <li><a value={0} onClick={movementClicker}>None</a></li>
-                        <li><a value={1} onClick={movementClicker}>Standard</a></li>
-                        <li><a value={2} onClick={movementClicker}>Evasive</a></li>
+                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box m-2">
+                        <li><a value={0} className={movement==0 ? "text-red-900 font-bold": "text-black"} onClick={movementClicker}>None</a></li>
+                        <li><a value={1} className={movement==1 ? "text-red-900 font-bold": "text-black"} onClick={movementClicker}>Standard</a></li>
+                        <li><a value={2} className={movement==2 ? "text-red-900 font-bold": "text-black"} onClick={movementClicker}>Evasive</a></li>
                     </ul>
                 </details>
                 <details className="dropdown dropdown-top">
                     <summary className="m-1 dropdown-btn btn">Speed</summary>
-                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box w-52">
-                        <li><a value={0.5} onClick={speedClicker}>Slow</a></li>
-                        <li><a value={1} onClick={speedClicker}>Standard</a></li>
-                        <li><a value={2} onClick={speedClicker}>Fast</a></li>
+                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box m-2">
+                        <li><a value={0.5} className={speed==0.5 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Slow</a></li>
+                        <li><a value={1} className={speed==1 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Standard</a></li>
+                        <li><a value={2} className={speed==2 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Fast</a></li>
                     </ul>
                 </details>
                 <details className="dropdown dropdown-top">
                     <summary className="m-1 dropdown-btn btn">Time</summary>
-                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box w-52">
-                        <li><a value={20} onClick={timeClicker}>20sec</a></li>
-                        <li><a value={60} onClick={timeClicker}>60sec</a></li>
+                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box m-2">
+                        <li><a value={20} className={timeSetting==20 ? "text-red-900 font-bold": "text-black"} onClick={timeClicker}>20sec</a></li>
+                        <li><a value={60} className={timeSetting==60 ? "text-red-900 font-bold": "text-black"} onClick={timeClicker}>60sec</a></li>
                     </ul>
                 </details>
                 <details className="dropdown dropdown-top">
                     <summary className="m-1 dropdown-btn btn"># Targets</summary>
-                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box w-52">
-                        <li><a value={10} onClick={targetClicker}>10</a></li>
-                        <li><a value={20} onClick={targetClicker}>20</a></li>
-                        <li><a value={30} onClick={targetClicker}>30</a></li>
+                    <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box m-2">
+                        <li><a value={10} className={targetSetting==10 ? "text-red-900 font-bold": "text-black"} onClick={targetClicker}>10 Targets</a></li>
+                        <li><a value={20} className={targetSetting==20 ? "text-red-900 font-bold": "text-black"} onClick={targetClicker}>20 Targets</a></li>
+                        <li><a value={30} className={targetSetting==30 ? "text-red-900 font-bold": "text-black"} onClick={targetClicker}>30 Targets</a></li>
                     </ul>
                 </details>
             </div>
