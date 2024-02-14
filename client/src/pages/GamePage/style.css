@@ -7,8 +7,24 @@
 .ready-btn {
   border-radius: 10px;
   border: black solid 2px;
-  padding: 0 20px;
   margin: 5px;
+  padding: 0 20px;
+}
+
+.dropdown-btn {
+  border-radius: 10px;
+  border: black solid 2px;
+  margin: 5px;
+}
+
+ul {
+  background-color: white;
+  border-radius: 10px;
+  border: black solid 2px;
+}
+
+li {
+  border-bottom: black solid 1px;
 }
 
 .game-viewport {

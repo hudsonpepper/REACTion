@@ -14,7 +14,9 @@ export default function GameProvider({ children }) {
     // Game Settings
     const [movement, setMovement] = useState(1);
     const [speed, setSpeed] = useState(1);
-    const [difficultyModifier, setDifficultyModifier] = useState(1)
+    // const [difficultyModifier, setDifficultyModifier] = useState(1)
+    const [timeSetting, setTimeSetting] = useState(20);
+    const [targetSetting, setTargetSetting] = useState(10);
 
     const [leftPos, setLeftPos] = useState(50);
     const [topPos, setTopPos] = useState(50);
@@ -65,6 +67,7 @@ export default function GameProvider({ children }) {
         const runObj = {
             runtime: timeOfPress[timeOfPress.length - 1],
             targetNumber: (timeOfPress.length - 1),
+            
             score: Math.round(100000 / avgTime)
         }
         console.log("RunObj: ", runObj)
@@ -88,7 +91,7 @@ export default function GameProvider({ children }) {
     const earlyEnd = (e) => {
         e.preventDefault();
         setGameState(0);
-        setCountdownClock(20);
+        setCountdownClock(timeSetting);
         setTargetCounter(0);
         clearInterval(intervalId);
       }
@@ -101,7 +104,7 @@ export default function GameProvider({ children }) {
             setGameState(gameState * -1);
             setTargetCounter(targetCounter + 1);
             updatePosition();
-            if (targetCounter >= 9) {
+            if (targetCounter >= (targetSetting - 1)) {
 
                 endGame(intervalId);
             }
@@ -134,8 +137,10 @@ export default function GameProvider({ children }) {
             setSpeed,
             movement,
             setMovement,
-            difficultyModifier,
-            setDifficultyModifier
+            timeSetting,
+            setTimeSetting,
+            targetSetting,
+            setTargetSetting
         }}>
             {children}
         </GameContext.Provider>
