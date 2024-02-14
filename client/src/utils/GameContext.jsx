@@ -26,6 +26,14 @@ export default function GameProvider({ children }) {
     clearInterval(intervalNum);
   };
 
+  const earlyEnd = (e) => {
+    e.preventDefault();
+    setGameState(0);
+    setCountdownClock(20);
+    setTargetCounter(0);
+    clearInterval(intervalId);
+  }
+
   const readyHandler = (e) => {
     if (intervalId != 0) {
       clearInterval(intervalId);
@@ -71,6 +79,7 @@ export default function GameProvider({ children }) {
         intervalId,
         renderTarget,
         readyHandler,
+        earlyEnd
       }}
     >
       {children}
