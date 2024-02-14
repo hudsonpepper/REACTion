@@ -4,7 +4,7 @@ import { useTheme } from '../utils/GameContext';
 const Target = ({onClickHandler}) => {
     // onclick, delete this and render new button (get new button as prop from create portal)
     const { leftPos, topPos } = useTheme();
-
+    console.log("I rerendered")
     
     // insert math and set position
     let styling = {

@@ -11,7 +11,7 @@ export default function GameProvider({ children }) {
     const [intervalId, setIntervalId] = useState(0);
     const [gameState, setGameState] = useState(0);
     const [targetCounter, setTargetCounter] = useState(0);
-    const [countdownClock, setCountdownClock] = useState(20);
+
     const [leftPos, setLeftPos] = useState(50);
     const [topPos, setTopPos] = useState(50);
     const [buttonPressTimes, setButtonPressTimes] = useState([]);
@@ -48,32 +48,11 @@ export default function GameProvider({ children }) {
     }
     const endGame = (intervalNum) => {
         setGameState(0);
-        setCountdownClock(20);
         setTargetCounter(0);
         clearInterval(intervalNum)
-
     }
 
-    const readyHandler = (e) => {
-        if (intervalId != 0) {
-            clearInterval(intervalId);
-        }
-        e.preventDefault();
-        setButtonPressTimes([Date.now()]);
-        let clockActual = countdownClock;
-        setGameState(1);
-        // call render target
-        renderTarget(e);
-        // start timer for game
-        let newInterval = setInterval(() => {
-            clockActual = clockActual - 1;
-            setCountdownClock(clockActual);
-            if (clockActual <= 0) {
-                endGame(newInterval);
-            }
-        }, 1000);
-        setIntervalId(newInterval)
-    }
+
 
     const renderTarget = (e) => {
         setButtonPressTimes([...buttonPressTimes, Date.now()])
@@ -91,14 +70,16 @@ export default function GameProvider({ children }) {
     return (
         <GameContext.Provider value={{
             gameState,
+            setGameState,
             targetCounter,
-            countdownClock,
+            setTargetCounter,
             leftPos,
             topPos,
             buttonPressTimes,
+            setButtonPressTimes,
             intervalId,
+            setIntervalId,
             renderTarget,
-            readyHandler,
             scoreHandler
         }}>
             {children}

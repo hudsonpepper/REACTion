@@ -3,8 +3,30 @@ import { useTheme } from '../utils/GameContext';
 import Auth from '../utils/auth';
 
 const GameUI = () => {
-    const {gameState, targetCounter, countdownClock, readyHandler, buttonPressTimes, scoreHandler} = useTheme();
-    
+    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler} = useTheme();
+    const [countdownClock, setCountdownClock] = useState(20);
+
+    const readyHandler = (e) => {
+        if (intervalId != 0) {
+            clearInterval(intervalId);
+        }
+        setCountdownClock(20)
+        setTargetCounter(0)
+        e.preventDefault();
+        setButtonPressTimes([Date.now()]);
+        let clockActual = countdownClock;
+        setGameState(1);
+        // call render target
+        // start timer for game
+        let newInterval = setInterval(() => {
+            clockActual = clockActual - 1;
+            setCountdownClock(clockActual);
+            if (clockActual <= 0) {
+                endGame(newInterval);
+            }
+        }, 1000);
+        setIntervalId(newInterval)
+    }
     return (
         <div className='game-header-bar'>
             {gameState == 0 ? <h2>Hit all the targets as fast as you can!</h2> : null }
