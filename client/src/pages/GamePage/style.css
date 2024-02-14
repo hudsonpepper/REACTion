@@ -23,3 +23,10 @@
   padding-right: 7vw; */
 }
 
+@media screen and (max-width: 640px) {
+  .game-viewport {
+    height: 75vh;
+    width: 90vw;
+  }
+}
+
