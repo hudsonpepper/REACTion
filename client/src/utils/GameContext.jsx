@@ -81,7 +81,7 @@ export default function GameProvider({ children }) {
     const renderTarget = (e) => {
         setButtonPressTimes([...buttonPressTimes, Date.now()])
         setIsAnimated(true)
-        setIsBezier(true)
+        //setIsBezier(true)
         if (gameState != 0) {
             setGameState(gameState * -1);
             setTargetCounter(targetCounter + 1);

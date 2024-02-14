@@ -45,7 +45,7 @@ const Target = ({ onClickHandler }) => {
         position: 'absolute',
         left: (leftPos) + '%',
         top: (topPos) + '%',
-        animation: `moveBackAndForth 1s cubic-bezier(${bezierP1x}, ${bezierP1y}, ${bezierP2x}, ${bezierP2y}) infinite alternate`,
+        animation: `moveBackAndForth 2s cubic-bezier(${bezierP1x}, ${bezierP1y}, ${bezierP2x}, ${bezierP2y}) infinite alternate`,
         // left: 100 + '%',
         // top: 100 + '%',
     };
