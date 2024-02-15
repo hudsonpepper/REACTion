@@ -37,10 +37,10 @@ function getUserStat() {
 
 function descendingComparator(a, b, orderBy) {
   if (a.hasOwnProperty(orderBy)) {
-    if (b[orderBy] < a[orderBy]) {
+    if (b[orderBy].toLowerCase() < a[orderBy].toLowerCase()) {
       return -1;
     }
-    if (b[orderBy] > a[orderBy]) {
+    if (b[orderBy].toLowerCase() > a[orderBy].toLowerCase()) {
       return 1;
     }
     return 0;
