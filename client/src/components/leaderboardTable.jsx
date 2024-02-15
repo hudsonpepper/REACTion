@@ -32,7 +32,7 @@ function getHighscores() {
   return data.users;
 }
 function getUserStat() {
-  if (!Auth.loggedIn()) {
+  if (Auth.loggedIn()) {
     const { loading, error, data } = useQuery(QUERY_ME);
     if (loading) return {};
     if (error) return {};
