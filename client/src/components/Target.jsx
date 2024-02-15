@@ -4,9 +4,9 @@ import { useTheme } from "../utils/GameContext";
 const Target = ({ onClickHandler }) => {
     // onclick, delete this and render new button (get new button as prop from create portal)
     const { leftPos, topPos, leftPosOffset, topPosOffset, bezierP1x, bezierP1y, bezierP2x, bezierP2y, speed} = useTheme();
-    console.log("I rerendered")
-    //console.log(`Left: ${leftPos} w/offset ${leftPosOffset} || Top: ${topPos} w/offset ${topPosOffset}`)
-    console.log(bezierP1x, bezierP1y, bezierP2x, bezierP2y)
+    // console.log("I rerendered")
+    // console.log(`Left: ${leftPos} w/offset ${leftPosOffset} || Top: ${topPos} w/offset ${topPosOffset}`)
+    // console.log(bezierP1x, bezierP1y, bezierP2x, bezierP2y)
     let topDirection, leftDirection;
 
     if (leftPos + leftPosOffset > 90) {
