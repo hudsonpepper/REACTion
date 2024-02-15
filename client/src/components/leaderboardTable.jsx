@@ -196,7 +196,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function LeaderboardComp() {
   let rows = getHighscores();
-  let userStat = getUserStat();
+  // let userStat = getUserStat();
   console.log("UserStat: ", userStat)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
