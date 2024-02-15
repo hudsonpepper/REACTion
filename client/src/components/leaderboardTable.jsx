@@ -33,7 +33,7 @@ function getHighscores() {
 }
 function getUserStat() {
   if (Auth.loggedIn()) {
-    return Auth.getProfile();
+    return Auth.getProfile().authenticatedPerson;
   }
   return null
 }
