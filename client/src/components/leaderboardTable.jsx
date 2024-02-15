@@ -88,19 +88,19 @@ const headCells = [
   {
     id: "highScore",
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: "Highscore",
   },
   {
     id: "avgScore",
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: "Average Score",
   },
   {
     id: "runNumber",
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: "Games Played",
   },
 ];
@@ -340,13 +340,13 @@ export default function LeaderboardComp() {
                     >
                       {row.username}
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       {row.statistics.highScore}
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       {row.statistics.avgScore}
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       {row.statistics.runNumber}
                     </TableCell>
                   </TableRow>
