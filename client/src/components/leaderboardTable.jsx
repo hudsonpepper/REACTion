@@ -282,9 +282,9 @@ export default function LeaderboardComp() {
               {Auth.getProfile().authenticatedPerson.username}'s Statistics
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              <p>Average Score: {userStat.statistics.avgScore}</p>
-              <p>High-Score: {userStat.statistics.highScore}</p>
-              <p>Games Played: {userStat.statistics.runNumber}</p>
+              <p>Average Score: {userStat.statistics.avgScore} {rows.users && rows.users.length ? `(#${rows.users.filter((row) => row.statistics.avgScore >=userStat.statistics.avgScore).length})`:``}</p>
+              <p>High-Score: {userStat.statistics.highScore} {rows.users && rows.users.length ? `(#${rows.users.filter((row) => row.statistics.highScore >=userStat.statistics.highScore).length})`:``}</p>
+              <p>Games Played: {userStat.statistics.runNumber} {rows.users && rows.users.length ? `(#${rows.users.filter((row) => row.statistics.runNumber >=userStat.statistics.runNumber).length})`:``}</p>
             </Typography>
           </CardContent>
         </Card>
