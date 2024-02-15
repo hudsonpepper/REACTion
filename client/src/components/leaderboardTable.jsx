@@ -199,6 +199,7 @@ export default function LeaderboardComp() {
 
   let userStat = getUserStat();
   console.log("UserStat: ", userStat)
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -275,15 +276,13 @@ export default function LeaderboardComp() {
     <Box sx={{ width: "100%" }}>
       {Auth.loggedIn() ?
         <Card sx={{ maxWidth: 345 }}>
-          {console.log(userStat.email)}
-          {console.log(userStat.statistics)}
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {Auth.getProfile().authenticatedPerson.username}'s Statistics
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              <p>Average Score: {userStat.statistics.avgScore} {rows.users && rows.users.length ? `(#${rows.users.filter((row) => row.statistics.avgScore >=userStat.statistics.avgScore).length})`:``}</p>
-              <p>High-Score: {userStat.statistics.highScore} {rows.users && rows.users.length ? `(#${rows.users.filter((row) => row.statistics.highScore >=userStat.statistics.highScore).length})`:``}</p>
+              <p>Average Score: {userStat.statistics.avgScore} {rows.length ? `(#${rows.filter((row) => row.statistics.avgScore >=userStat.statistics.avgScore).length})`:``}</p>
+              <p>High-Score: {userStat.statistics.highScore} {rows.length ? `(#${rows.filter((row) => row.statistics.highScore >=userStat.statistics.highScore).length})`:``}</p>
               <p>Games Played: {userStat.statistics.runNumber} {rows.users && rows.users.length ? `(#${rows.users.filter((row) => row.statistics.runNumber >=userStat.statistics.runNumber).length})`:``}</p>
             </Typography>
           </CardContent>
