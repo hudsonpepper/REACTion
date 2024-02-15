@@ -254,6 +254,7 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
+      {Auth.loggedIn() ? 
       <Card sx={{ maxWidth: 345 }}>
         {console.log(userStat.email)}
         {console.log(userStat.stats)}
@@ -268,6 +269,7 @@ export default function LeaderboardComp() {
           </Typography>
         </CardContent>
       </Card>
+      : null }
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
