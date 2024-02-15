@@ -340,13 +340,13 @@ export default function LeaderboardComp() {
                     >
                       {row.username}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left" padding="none">
                       {row.statistics.highScore}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left" padding="none">
                       {row.statistics.avgScore}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left" padding="none">
                       {row.statistics.runNumber}
                     </TableCell>
                   </TableRow>

@@ -56,6 +56,10 @@ export default function GameProvider({ children }) {
                 setBezierP2y(2 / 3);
             }
         }
+        else {
+            setLeftPosOffset(0);
+            setTopPosOffset(0)
+        }
     }
 
     const calcModifier = () => {
