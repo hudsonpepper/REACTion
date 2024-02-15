@@ -64,9 +64,9 @@ export default function GameProvider({ children }) {
         if (movement == 0) val1 = 0.7;
         else if (movement == 1) val1 = 1;
         else if (movement == 2) val1 = 1.2;
-        if (speed == 0.5) val2 = 0.6;
+        if (speed == 0.5) val2 = 1.3;
         else if (speed == 1) val2 = 1;
-        else if (speed == 2) val2 = 1.3;
+        else if (speed == 2) val2 = 0.6;
         return val1*val2;
     }
 

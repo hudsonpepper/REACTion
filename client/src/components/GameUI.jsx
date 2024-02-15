@@ -69,9 +69,9 @@ const GameUI = () => {
                 <details className="dropdown dropdown-top">
                     <summary className="m-1 dropdown-btn btn">Speed</summary>
                     <ul className="absolute p-2 shadow menu dropdown-content z-[1] bg-white-100 bg-opacity-100 rounded-box m-2">
-                        <li><a value={0.5} className={speed==0.5 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Slow</a></li>
+                        <li><a value={2} className={speed==2 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Slow</a></li>
                         <li><a value={1} className={speed==1 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Standard</a></li>
-                        <li><a value={2} className={speed==2 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Fast</a></li>
+                        <li><a value={0.5} className={speed==0.5 ? "text-red-900 font-bold": "text-black"} onClick={speedClicker}>Fast</a></li>
                     </ul>
                 </details>
                 <details className="dropdown dropdown-top">
