@@ -8,6 +8,7 @@ import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 
 import Header from "./components/Header/index";
+import Footer from "./components/Footer/index"
 import GameProvider from "./utils/GameContext";
 
 // Construct our main GraphQL API endpoint
@@ -44,6 +45,7 @@ function App() {
             <Outlet />
           </GameProvider>
         </div>
+        <Footer />
       </div>
     </ApolloProvider>
   );
