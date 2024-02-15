@@ -78,23 +78,23 @@ const Profile = () => {
              <div className="flex-row justify-evenly">
               <div>
                 <h2>Date Played</h2>
-                <p>{user.priorRuns[selectedAttempt - 1].datePlayed}</p>
+                <p>{user.priorRuns ? user.priorRuns[selectedAttempt - 1].datePlayed : null}</p>
               </div>
               <div>
                 <h2>Run Time</h2>
-                <p>{user.priorRuns[selectedAttempt - 1].runtime / 1000} sec</p>
+                <p>{user.priorRuns ? user.priorRuns[selectedAttempt - 1].runtime / 1000 : null} sec</p>
               </div>
               <div>
                 <h2>Targets Hit</h2>
-                <p>{user.priorRuns[selectedAttempt - 1].targetNumber}</p>
+                <p>{user.priorRuns ? user.priorRuns[selectedAttempt - 1].targetNumber : null }</p>
               </div>
               <div>
                 <h2>Difficulty</h2>
-                <p>{user.priorRuns[selectedAttempt - 1].difficultyModifier}</p>
+                <p>{user.priorRuns ? user.priorRuns[selectedAttempt - 1].difficultyModifier : null}</p>
               </div>
               <div>
                 <h2>SCORE</h2>
-                <p>{user.priorRuns[selectedAttempt - 1].score}</p>
+                <p>{user.priorRuns ? user.priorRuns[selectedAttempt - 1].score : null}</p>
               </div>
              </div>
           </div>
