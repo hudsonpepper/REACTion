@@ -32,18 +32,7 @@ function getHighscores() {
   return data.users;
 }
 function getUserStat() {
-  if (Auth.loggedIn()) {
-    const { loading, error, data } = useQuery(QUERY_ME);
-    if (loading) return {};
-    if (error) return {};
-    let info = {
-      email: data.me.email,
-      stats: data.me.statistics,
-    };
-    return info;
-  }
-  console.log("User not logged in");
-  return {};
+  return Auth.getProfile();
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -181,6 +170,7 @@ EnhancedTableToolbar.propTypes = {
 export default function LeaderboardComp() {
   let rows = getHighscores();
   let userStat = getUserStat();
+  console.log(userStat)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -254,7 +244,7 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      {Auth.loggedIn() ? 
+      {/* {Auth.loggedIn() ? 
       <Card sx={{ maxWidth: 345 }}>
         {console.log(userStat.email)}
         {console.log(userStat.stats)}
@@ -269,7 +259,7 @@ export default function LeaderboardComp() {
           </Typography>
         </CardContent>
       </Card>
-      : null }
+      : null } */}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
