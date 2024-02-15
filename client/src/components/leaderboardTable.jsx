@@ -26,20 +26,24 @@ function getHighscores() {
   const { loading, error, data } = useQuery(QUERY_HIGHSCORES);
   if (loading) return [];
   if (error) return [];
-  // console.log(data);
-  // console.log(data.users[0].username);
-  // console.log(data.users[0].statistics.highScore);
+  console.log("DATA:", data);
+  console.log(data.users[0].username);
+  console.log(data.users[0].statistics.highScore);
   return data.users;
 }
 function getUserStat() {
-  const { loading, error, data } = useQuery(QUERY_ME);
-  if (loading) return [];
-  if (error) return [];
-  let info = {
-    email: data.me.email,
-    stats: data.me.statistics,
-  };
-  return info;
+  if (!Auth.loggedIn()) {
+    const { loading, error, data } = useQuery(QUERY_ME);
+    if (loading) return {};
+    if (error) return {};
+    let info = {
+      email: data.me.email,
+      stats: data.me.statistics,
+    };
+    return info;
+  }
+  console.log("User not logged in");
+  return {};
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -184,8 +188,10 @@ export default function LeaderboardComp() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
+    console.log("ORDER: ", order, "|| ORDERBY: ", orderBy)
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
