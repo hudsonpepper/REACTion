@@ -56,6 +56,10 @@ export default function GameProvider({ children }) {
                 setBezierP2y(2 / 3);
             }
         }
+        else {
+            setLeftPosOffset(0);
+            setTopPosOffset(0)
+        }
     }
 
     const calcModifier = () => {
@@ -64,9 +68,9 @@ export default function GameProvider({ children }) {
         if (movement == 0) val1 = 0.7;
         else if (movement == 1) val1 = 1;
         else if (movement == 2) val1 = 1.2;
-        if (speed == 0.5) val2 = 0.6;
+        if (speed == 0.5) val2 = 1.3;
         else if (speed == 1) val2 = 1;
-        else if (speed == 2) val2 = 1.3;
+        else if (speed == 2) val2 = 0.6;
         return val1*val2;
     }
 
@@ -101,13 +105,6 @@ export default function GameProvider({ children }) {
         clearInterval(intervalNum)
     }
 
-    const earlyEnd = (e) => {
-        e.preventDefault();
-        setGameState(0);
-        setCountdownClock(timeSetting);
-        setTargetCounter(0);
-        clearInterval(intervalId);
-      }
 
     const renderTarget = (e) => {
         setButtonPressTimes([...buttonPressTimes, Date.now()])
@@ -144,7 +141,6 @@ export default function GameProvider({ children }) {
             setIntervalId,
             renderTarget,
             scoreHandler,
-            earlyEnd,
             endGame,
             speed,
             setSpeed,

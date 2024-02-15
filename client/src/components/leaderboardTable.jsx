@@ -26,28 +26,36 @@ function getHighscores() {
   const { loading, error, data } = useQuery(QUERY_HIGHSCORES);
   if (loading) return [];
   if (error) return [];
-  // console.log(data);
-  // console.log(data.users[0].username);
-  // console.log(data.users[0].statistics.highScore);
+  console.log("DATA:", data);
+  console.log(data.users[0].username);
+  console.log(data.users[0].statistics.highScore);
   return data.users;
 }
 function getUserStat() {
-  const { loading, error, data } = useQuery(QUERY_ME);
-  if (loading) return [];
-  if (error) return [];
-  let info = {
-    email: data.me.email,
-    stats: data.me.statistics,
-  };
-  return info;
+  if (Auth.loggedIn()) {
+    return Auth.getProfile().authenticatedPerson;
+  }
+  return null
 }
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
+  if (a.hasOwnProperty(orderBy)) {
+    if (b[orderBy].toLowerCase() < a[orderBy].toLowerCase()) {
+      return -1;
+    }
+    if (b[orderBy].toLowerCase() > a[orderBy].toLowerCase()) {
+      return 1;
+    }
+    return 0;
   }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
+  else if (a.statistics.hasOwnProperty(orderBy)) {
+    if (b.statistics[orderBy] < a.statistics[orderBy]) {
+      return -1;
+    }
+    if (b.statistics[orderBy] > a.statistics[orderBy]) {
+      return 1;
+    }
+    return 0;
   }
   return 0;
 }
@@ -72,16 +80,28 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "name",
+    id: "username",
     numeric: false,
     disablePadding: true,
     label: "Username",
   },
   {
-    id: "Time",
+    id: "highScore",
     numeric: true,
     disablePadding: false,
     label: "Highscore",
+  },
+  {
+    id: "avgScore",
+    numeric: true,
+    disablePadding: false,
+    label: "Average Score",
+  },
+  {
+    id: "runNumber",
+    numeric: true,
+    disablePadding: false,
+    label: "Games Played",
   },
 ];
 
@@ -176,7 +196,10 @@ EnhancedTableToolbar.propTypes = {
 
 export default function LeaderboardComp() {
   let rows = getHighscores();
+
   let userStat = getUserStat();
+  console.log("UserStat: ", userStat)
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -184,8 +207,11 @@ export default function LeaderboardComp() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+
   const handleRequestSort = (event, property) => {
+    console.log("handleRequestSort ACTIVATED")
     const isAsc = orderBy === property && order === "asc";
+    console.log("ORDER: ", order, "|| ORDERBY: ", orderBy, "|| PROPERTY: ", property, "|| orderBy === property")
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
@@ -248,20 +274,31 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Card sx={{ maxWidth: 345 }}>
-        {console.log(userStat.email)}
-        {console.log(userStat.stats)}
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {Auth.getProfile().authenticatedPerson.username}'s Statistics
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <p>Average Score: {userStat.stats.avgScore}</p>
-            <p>High-Score: {userStat.stats.highScore}</p>
-            <p>Games Played: {userStat.stats.runNumber}</p>
-          </Typography>
-        </CardContent>
-      </Card>
+      {Auth.loggedIn() ?
+        <Card sx={{ maxWidth: 345 }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {Auth.getProfile().authenticatedPerson.username}'s Statistics
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <p>High-Score: {userStat.statistics.highScore} {rows.length ? `(#${rows.filter((row) => row.statistics.highScore >=userStat.statistics.highScore).length})`:``}</p>
+              <p>Average Score: {userStat.statistics.avgScore} {rows.length ? `(#${rows.filter((row) => row.statistics.avgScore >=userStat.statistics.avgScore).length})`:``}</p>
+              <p>Games Played: {userStat.statistics.runNumber} {rows.length ? `(#${rows.filter((row) => row.statistics.runNumber >=userStat.statistics.runNumber).length})`:``}</p>
+            </Typography>
+          </CardContent>
+        </Card>
+        : <Card sx={{ maxWidth: 345 }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Sign in to see statistics
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <p>Average Score: </p>
+              <p>High-Score: </p>
+              <p>Games Played: </p>
+            </Typography>
+          </CardContent>
+        </Card>}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -305,6 +342,12 @@ export default function LeaderboardComp() {
                     </TableCell>
                     <TableCell align="left">
                       {row.statistics.highScore}
+                    </TableCell>
+                    <TableCell align="left">
+                      {row.statistics.avgScore}
+                    </TableCell>
+                    <TableCell align="left">
+                      {row.statistics.runNumber}
                     </TableCell>
                   </TableRow>
                 );

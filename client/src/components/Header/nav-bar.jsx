@@ -46,18 +46,12 @@ const Nav = () => {
       <section className="headerComponentsLayout">
         <ThemeProvider theme={theme}>
           <Link className="hidden md:inline" to="/">
-            <Button
-              variant="contained"
-              color="Grey"
-            >
+            <Button variant="contained" color="Grey">
               Home
             </Button>
           </Link>
           <Link className="hidden md:inline" to="/leaderboard">
-            <Button
-              variant="contained"
-              color="Grey"
-            >
+            <Button variant="contained" color="Grey">
               Leaderboard
             </Button>
           </Link>
@@ -65,20 +59,13 @@ const Nav = () => {
           {Auth.loggedIn() ? (
             <>
               <Link className="hidden md:inline" to="/me">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                >
+                <Button variant="contained" color="Grey">
                   {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
                   {Auth.getProfile().authenticatedPerson.username}
                 </Button>
               </Link>
               <Link className="hidden md:inline" to="/me">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                  onClick={logout}
-                >
+                <Button variant="contained" color="Grey" onClick={logout}>
                   Logout
                 </Button>
               </Link>
@@ -86,18 +73,12 @@ const Nav = () => {
           ) : (
             <>
               <Link className="hidden md:inline" to="/login">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                >
+                <Button variant="contained" color="Grey">
                   Login
                 </Button>
               </Link>
               <Link className="hidden md:inline" to="/signup">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                >
+                <Button variant="contained" color="Grey">
                   Sign-Up
                 </Button>
               </Link>
@@ -105,15 +86,16 @@ const Nav = () => {
           )}
         </ThemeProvider>
 
-        <div className="visible md:hidden mr:50px sm:grid-rows-12">
+        <div className="visible  md:hidden mr:50px sm:grid-rows-12">
           <Button
             id="fade-button"
+            className="!h-8 !w-8 !bg-gray-300 !hover:bg-gray-200 !rounded"
             aria-controls={open ? "fade-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            Menu
+            <img className="h-5" src="menuIcon.svg" alt="menu-icon"/>
           </Button>
           <Menu
             id="fade-menu"
@@ -130,7 +112,7 @@ const Nav = () => {
                 <Link to="/me">
                   <MenuItem>
                     {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
-                    {Auth.getProfile().authenticatedPerson.username}'s profile
+                    {Auth.getProfile().authenticatedPerson.username}'s Profile
                   </MenuItem>
                 </Link>
                 <MenuItem onClick={logout}>Logout</MenuItem>
