@@ -86,15 +86,16 @@ const Nav = () => {
           )}
         </ThemeProvider>
 
-        <div className="visible md:hidden mr:50px sm:grid-rows-12">
+        <div className="visible  md:hidden mr:50px sm:grid-rows-12">
           <Button
             id="fade-button"
+            className="!h-8 !w-8 !bg-gray-300 !hover:bg-gray-200 !rounded"
             aria-controls={open ? "fade-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            Menu
+            <img className="h-5" src="menuIcon.svg" alt="menu-icon"/>
           </Button>
           <Menu
             id="fade-menu"
