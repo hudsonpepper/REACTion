@@ -273,33 +273,33 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      {/* {Auth.loggedIn() ? 
-      <Card sx={{ maxWidth: 345 }}>
-        {console.log(userStat.email)}
-        {console.log(userStat.stats)}
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {Auth.getProfile().authenticatedPerson.username}'s Statistics
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <p>Average Score: {userStat.stats.avgScore}</p>
-            <p>High-Score: {userStat.stats.highScore}</p>
-            <p>Games Played: {userStat.stats.runNumber}</p>
-          </Typography>
-        </CardContent>
-      </Card>
-      : <Card sx={{ maxWidth: 345 }}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Sign in to see statistics
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <p>Average Score: </p>
-          <p>High-Score: </p>
-          <p>Games Played: </p>
-        </Typography>
-      </CardContent>
-    </Card> } */}
+      {Auth.loggedIn() ?
+        <Card sx={{ maxWidth: 345 }}>
+          {console.log(userStat.email)}
+          {console.log(userStat.stats)}
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {Auth.getProfile().authenticatedPerson.username}'s Statistics
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <p>Average Score: {userStat.stats.avgScore}</p>
+              <p>High-Score: {userStat.stats.highScore}</p>
+              <p>Games Played: {userStat.stats.runNumber}</p>
+            </Typography>
+          </CardContent>
+        </Card>
+        : <Card sx={{ maxWidth: 345 }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Sign in to see statistics
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <p>Average Score: </p>
+              <p>High-Score: </p>
+              <p>Games Played: </p>
+            </Typography>
+          </CardContent>
+        </Card>}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
