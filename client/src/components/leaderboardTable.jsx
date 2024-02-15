@@ -36,11 +36,23 @@ function getUserStat() {
 }
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
+  if (a.hasOwnProperty(orderBy)) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
   }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
+  else if (a.statistics.hasOwnProperty(orderBy)) {
+    if (b.statistics[orderBy] < a.statistics[orderBy]) {
+      return -1;
+    }
+    if (b.statistics[orderBy] > a.statistics[orderBy]) {
+      return 1;
+    }
+    return 0;
   }
   return 0;
 }
@@ -182,7 +194,7 @@ export default function LeaderboardComp() {
   const handleRequestSort = (event, property) => {
     console.log("handleRequestSort ACTIVATED")
     const isAsc = orderBy === property && order === "asc";
-    console.log("ORDER: ", order, "|| ORDERBY: ", orderBy, "|| PROPERTY: ", property)
+    console.log("ORDER: ", order, "|| ORDERBY: ", orderBy, "|| PROPERTY: ", property, "|| orderBy === property")
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
