@@ -32,7 +32,7 @@ function getHighscores() {
   return data.users;
 }
 function getUserStat() {
-  if (Auth.loggedIn) {
+  if (Auth.loggedIn()) {
     return Auth.getProfile();
   }
   return null
@@ -196,8 +196,9 @@ EnhancedTableToolbar.propTypes = {
 
 export default function LeaderboardComp() {
   let rows = getHighscores();
+
   let userStat = getUserStat();
-  console.log("UserStat: ", userStat)
+  console.log("UserStat: ", Auth.loggedIn())
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
