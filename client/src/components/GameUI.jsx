@@ -3,8 +3,17 @@ import { useTheme } from '../utils/GameContext';
 import Auth from '../utils/auth';
 
 const GameUI = () => {
-    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler, endGame, earlyEnd, speed, setSpeed, movement, setMovement, timeSetting, setTimeSetting, targetSetting, setTargetSetting} = useTheme();
+    const {gameState, setGameState, intervalId, setIntervalId, targetCounter, setTargetCounter, buttonPressTimes, setButtonPressTimes, scoreHandler, endGame, speed, setSpeed, movement, setMovement, timeSetting, setTimeSetting, targetSetting, setTargetSetting} = useTheme();
     const [countdownClock, setCountdownClock] = useState(20);
+
+    
+    const earlyEnd = (e) => {
+        e.preventDefault();
+        setGameState(0);
+        setCountdownClock(timeSetting);
+        setTargetCounter(0);
+        clearInterval(intervalId);
+      }
 
     const readyHandler = (e) => {
         if (intervalId != 0) {

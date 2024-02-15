@@ -101,13 +101,6 @@ export default function GameProvider({ children }) {
         clearInterval(intervalNum)
     }
 
-    const earlyEnd = (e) => {
-        e.preventDefault();
-        setGameState(0);
-        setCountdownClock(timeSetting);
-        setTargetCounter(0);
-        clearInterval(intervalId);
-      }
 
     const renderTarget = (e) => {
         setButtonPressTimes([...buttonPressTimes, Date.now()])
@@ -144,7 +137,6 @@ export default function GameProvider({ children }) {
             setIntervalId,
             renderTarget,
             scoreHandler,
-            earlyEnd,
             endGame,
             speed,
             setSpeed,
