@@ -107,8 +107,6 @@ const Nav = () => {
 
         <div className="visible md:hidden mr:50px sm:grid-rows-12">
           <Button
-            variant="contained"
-            color="Grey"
             id="fade-button"
             aria-controls={open ? "fade-menu" : undefined}
             aria-haspopup="true"
