@@ -198,7 +198,7 @@ export default function LeaderboardComp() {
   let rows = getHighscores();
 
   let userStat = getUserStat();
-  console.log("UserStat: ", Auth.loggedIn())
+  console.log("UserStat: ", userStat)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -276,15 +276,15 @@ export default function LeaderboardComp() {
       {Auth.loggedIn() ?
         <Card sx={{ maxWidth: 345 }}>
           {console.log(userStat.email)}
-          {console.log(userStat.stats)}
+          {console.log(userStat.statistics)}
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {Auth.getProfile().authenticatedPerson.username}'s Statistics
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              <p>Average Score: {userStat.stats.avgScore}</p>
-              <p>High-Score: {userStat.stats.highScore}</p>
-              <p>Games Played: {userStat.stats.runNumber}</p>
+              <p>Average Score: {userStat.statistics.avgScore}</p>
+              <p>High-Score: {userStat.statistics.highScore}</p>
+              <p>Games Played: {userStat.statistics.runNumber}</p>
             </Typography>
           </CardContent>
         </Card>
