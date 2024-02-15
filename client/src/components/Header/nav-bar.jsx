@@ -45,65 +45,40 @@ const Nav = () => {
     <>
       <section className="headerComponentsLayout">
         <ThemeProvider theme={theme}>
-          <Link to="/">
-            <Button
-              variant="contained"
-              color="Grey"
-              className="invisible md:visible"
-            >
+          <Link className="hidden md:inline" to="/">
+            <Button variant="contained" color="Grey">
               Home
             </Button>
           </Link>
-          <Link to="/leaderboard">
-            <Button
-              variant="contained"
-              color="Grey"
-              className="invisible md:visible"
-            >
+          <Link className="hidden md:inline" to="/leaderboard">
+            <Button variant="contained" color="Grey">
               Leaderboard
             </Button>
           </Link>
           <Name />
           {Auth.loggedIn() ? (
             <>
-              <Link to="/me">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                  className="invisible md:visible"
-                >
+              <Link className="hidden md:inline" to="/me">
+                <Button variant="contained" color="Grey">
                   {/* Run the getProfile() method to get access to the unencrypted token value in order to retrieve the user's username  */}
-                  {Auth.getProfile().authenticatedPerson.username}'s profile
+                  {Auth.getProfile().authenticatedPerson.username}
                 </Button>
               </Link>
-              <Link to="/">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                  onClick={logout}
-                  className="invisible md:visible"
-                >
+              <Link className="hidden md:inline" to="/me">
+                <Button variant="contained" color="Grey" onClick={logout}>
                   Logout
                 </Button>
               </Link>
             </>
           ) : (
             <>
-              <Link to="/login">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                  className="invisible md:visible"
-                >
+              <Link className="hidden md:inline" to="/login">
+                <Button variant="contained" color="Grey">
                   Login
                 </Button>
               </Link>
-              <Link to="/signup">
-                <Button
-                  variant="contained"
-                  color="Grey"
-                  className="invisible md:visible"
-                >
+              <Link className="hidden md:inline" to="/signup">
+                <Button variant="contained" color="Grey">
                   Sign-Up
                 </Button>
               </Link>
@@ -111,7 +86,7 @@ const Nav = () => {
           )}
         </ThemeProvider>
 
-        <div className="visible md:invisible mr:50px sm:grid-rows-12">
+        <div className="visible md:hidden mr:50px sm:grid-rows-12">
           <Button
             id="fade-button"
             aria-controls={open ? "fade-menu" : undefined}
@@ -119,7 +94,7 @@ const Nav = () => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            Reaction
+            Menu
           </Button>
           <Menu
             id="fade-menu"

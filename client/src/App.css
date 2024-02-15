@@ -16,6 +16,19 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+h1 {
+  font-size: 2em;
+}
+
+.profile-boxes {
+  border-radius: 20px;
+  border: black 8px solid;
+}
+
+.graph-box {
+  color: white;
+  background-color:#646cffaa;
+}
 
 @keyframes logo-spin {
   from {
