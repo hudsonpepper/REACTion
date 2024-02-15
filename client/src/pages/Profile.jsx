@@ -53,7 +53,7 @@ const Profile = () => {
   }
 
   const renderDropdownOptions = (attemptNum) => {
-    return <li><a value={attemptNum} onClick={dropdownClicker}>Run #{attemptNum}</a></li>;
+    return <li><a value={attemptNum} className={selectedAttempt==attemptNum ? "text-red-900 font-bold": "text-black"} onClick={dropdownClicker}>Run #{attemptNum}</a></li>;
   }
 
   return (
