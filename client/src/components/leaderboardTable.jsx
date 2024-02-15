@@ -180,8 +180,9 @@ export default function LeaderboardComp() {
 
 
   const handleRequestSort = (event, property) => {
+    console.log("handleRequestSort ACTIVATED")
     const isAsc = orderBy === property && order === "asc";
-    console.log("ORDER: ", order, "|| ORDERBY: ", orderBy)
+    console.log("ORDER: ", order, "|| ORDERBY: ", orderBy, "|| PROPERTY: ", property)
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
