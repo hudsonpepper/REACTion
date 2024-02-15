@@ -31,12 +31,12 @@ function getHighscores() {
   console.log(data.users[0].statistics.highScore);
   return data.users;
 }
-function getUserStat() {
-  if (Auth.loggedIn) {
-    return Auth.getProfile();
-  }
-  return {}
-}
+// function getUserStat() {
+//   if (Auth.loggedIn) {
+//     return Auth.getProfile();
+//   }
+//   return {}
+// }
 
 function descendingComparator(a, b, orderBy) {
   if (a.hasOwnProperty(orderBy)) {
@@ -272,7 +272,7 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      {Auth.loggedIn() ? 
+      {/* {Auth.loggedIn() ? 
       <Card sx={{ maxWidth: 345 }}>
         {console.log(userStat.email)}
         {console.log(userStat.stats)}
@@ -298,7 +298,7 @@ export default function LeaderboardComp() {
           <p>Games Played: </p>
         </Typography>
       </CardContent>
-    </Card> }
+    </Card> } */}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
