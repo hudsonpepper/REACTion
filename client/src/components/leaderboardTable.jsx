@@ -31,12 +31,12 @@ function getHighscores() {
   console.log(data.users[0].statistics.highScore);
   return data.users;
 }
-// function getUserStat() {
-//   if (Auth.loggedIn) {
-//     return Auth.getProfile();
-//   }
-//   return {}
-// }
+function getUserStat() {
+  if (Auth.loggedIn) {
+    return Auth.getProfile();
+  }
+  return null
+}
 
 function descendingComparator(a, b, orderBy) {
   if (a.hasOwnProperty(orderBy)) {
@@ -196,8 +196,8 @@ EnhancedTableToolbar.propTypes = {
 
 export default function LeaderboardComp() {
   let rows = getHighscores();
-  // let userStat = getUserStat();
-  // console.log("UserStat: ", userStat)
+  let userStat = getUserStat();
+  console.log("UserStat: ", userStat)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
