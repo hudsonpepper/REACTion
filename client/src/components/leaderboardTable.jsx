@@ -32,7 +32,9 @@ function getHighscores() {
   return data.users;
 }
 function getUserStat() {
-  return Auth.getProfile();
+  if (Auth.loggedIn && !Auth.isTokenExpired) {
+    return Auth.getProfile();
+  }
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -182,7 +184,7 @@ EnhancedTableToolbar.propTypes = {
 export default function LeaderboardComp() {
   let rows = getHighscores();
   let userStat = getUserStat();
-  console.log(userStat)
+  console.log("UserStat: ", userStat)
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Time");
   const [selected, setSelected] = React.useState([]);
@@ -257,7 +259,7 @@ export default function LeaderboardComp() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      {/* {Auth.loggedIn() ? 
+      {Auth.loggedIn() ? 
       <Card sx={{ maxWidth: 345 }}>
         {console.log(userStat.email)}
         {console.log(userStat.stats)}
@@ -272,7 +274,18 @@ export default function LeaderboardComp() {
           </Typography>
         </CardContent>
       </Card>
-      : null } */}
+      : <Card sx={{ maxWidth: 345 }}>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          Sign in to see statistics
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <p>Average Score: </p>
+          <p>High-Score: </p>
+          <p>Games Played: </p>
+        </Typography>
+      </CardContent>
+    </Card> }
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
