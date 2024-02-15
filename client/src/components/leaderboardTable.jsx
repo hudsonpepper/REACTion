@@ -83,7 +83,7 @@ const headCells = [
     label: "Username",
   },
   {
-    id: "highscore",
+    id: "highScore",
     numeric: true,
     disablePadding: false,
     label: "Highscore",
